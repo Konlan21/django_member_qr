@@ -6,32 +6,34 @@ import qrcode
 
 class SaveEmployee(forms.ModelForm):
     employee_code = forms.CharField(max_length=250, label="Company ID")
-    first_name = forms.CharField(max_length=250, label="First Name")
-    middle_name = forms.CharField(max_length=250, label="Middle Name", required=False)
-    last_name = forms.CharField(max_length=250, label="Last Name")
-    dob = forms.DateField(label="Birthday")
-    gender = forms.ChoiceField(choices=[("Male","Male"), ("Female","Female")], label="Gender")
-    contact = forms.CharField(max_length=250, label="Contact #")
-    email = forms.CharField(max_length=250, label="Email")
-    address = forms.Textarea()
-    department = forms.CharField(max_length=250, label="Department")
-    position = forms.CharField(max_length=250, label="Position")
-    avatar = forms.ImageField(label="Avatar")
+    name = forms.CharField(max_length=250, label="Name")
+    gender = forms.ChoiceField(choices=[("Male", "Male"), ("Female", "Female")], label="Gender")
+    profession = forms.CharField(max_length=100, label="Profession")
+    date_of_birth = forms.DateField(label="Date of Birth")
+    date_of_joining_splm = forms.DateField(label="Date of Joining SPLM")
+    date_of_issue = forms.DateField(label="Date of Issue")
+    expiry_date = forms.DateField(label="Expiry Date")
+    avatar = forms.ImageField(label="Avatar", required=False)  # Make it optional
+    country = forms.CharField(max_length=255, label="Country")
+    state = forms.CharField(max_length=255, label="State")
+    payam = forms.CharField(max_length=255, label="Payam")
+    boma = forms.CharField(max_length=255, label="Boma")
 
-    class Meta():
+    class Meta:
         model = models.Employee
         fields = ('employee_code',
-                  'first_name',
-                  'middle_name',
-                  'last_name',
-                  'dob',
+                  'name',
                   'gender',
-                  'contact',
-                  'email',
-                  'address',
-                  'department',
-                  'position',
-                  'avatar', )
+                  'profession',
+                  'date_of_birth',
+                  'date_of_joining_splm',
+                  'date_of_issue',
+                  'expiry_date',
+                  'avatar',
+                  'country',
+                  'state',
+                  'payam',
+                  'boma',)
 
     def clean_employee_code(self):
         id = self.data['id'] if self.data['id'] != '' else 0

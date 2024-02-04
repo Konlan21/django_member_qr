@@ -7,27 +7,27 @@ from django.dispatch import receiver
 import qrcode
 from PIL import Image
 
-# Create your models here.
+
 class Employee(models.Model):
-    employee_code = models.CharField(max_length=100)
-    first_name = models.CharField(max_length=250)
-    middle_name = models.CharField(max_length=250, null=True)
-    last_name = models.CharField(max_length=250)
-    gender = models.CharField(max_length=50, choices=(("Male","Male"), ("Female","Female")), default="Male")
-    dob = models.DateField(max)
-    contact = models.CharField(max_length=100)
-    email = models.CharField(max_length=250, blank=True)
-    address = models.TextField(null=True, blank=True)
-    department = models.TextField(null=True, blank=True)
-    position = models.TextField(null=True, blank=True)
-    avatar = models.ImageField(upload_to = "employee-avatars/",null=True, blank=True)
-    date_added = models.DateTimeField(default = timezone.now)
-    date_created = models.DateTimeField(auto_now = True)
+    employee_code = models.CharField(max_length=100, unique=True)
+    name = models.CharField(max_length=250)
+    gender = models.CharField(max_length=50, choices=(("Male", "Male"), ("Female", "Female")), default="Male")
+    profession = models.CharField(max_length=100)
+    date_of_birth = models.DateField()
+    date_of_joining_splm = models.DateField()
+    date_of_issue = models.DateField()
+    expiry_date = models.DateField()
+    avatar = models.ImageField(upload_to="employee-avatars/", null=True, blank=True)
+    county = models.CharField(max_length=255)
+    state = models.CharField(max_length=255)
+    payam = models.CharField(max_length=255)
+    boma = models.CharField(max_length=255)
 
     def __str__(self):
-        return str(f"{self.employee_code} - {self.first_name} "+ (f"{self.middle_name} {self.last_name}" if not self.middle_name == "" else f"{self.last_name}") )
-    def name(self):
-        return str(f"{self.first_name} "+ (f"{self.middle_name} {self.last_name}" if not self.middle_name == "" else f"{self.last_name}") )
+        return f"{self.employee_code} - {self.name}"
+
+    def full_name(self):
+        return self.name
 
 
     def save(self, *args, **kwargs):

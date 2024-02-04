@@ -1,31 +1,101 @@
 {% load qr_code %}
+{% load static %}
 <style>
     #uni_modal .modal-footer {
-        display: none
+        display: none;
     }
-    
+
     #uni_modal .modal-sub-footer {
-        display: flex
+        display: flex;
     }
-    
-    .id-card {
-        width: 3in;
-        height: 52vh;
-        border: 2px solid var(--bs-dark);
-        padding: 2rem 1.5rem;
-    }
-    
+
     #card-qr,
     #card-avatar {
         width: 9rem;
         height: 9rem;
+        border-radius: 50%;
+        border: 4px solid #fff;
+    }
+
+    .id-card-1 {
+        width: 3in;
+        margin-bottom: 20px;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .id-card-1 img.flag {
+        position: absolute;
+        top: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 120px;
+        height: auto;
+    }
+
+    .id-card-1 img.logo-left,
+    .id-card-1 img.logo-right {
+        position: absolute;
+        top: 10px;
+        width: 70px;
+        height: auto;
+    }
+
+    .id-card-1 img.logo-left {
+        left: 10px;
+    }
+
+    .id-card-1 img.logo-right {
+        right: 10px;
+    }
+
+    #card-avatar {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        margin-top: 10px;
+    }
+
+    #card-qr {
+        width: 120px;
+        height: 120px;
+        margin-top: 10px;
+    }
+
+    .id-card {
+        width: 5in;
+        height: 52vh;
+        border: 2px solid var(--bs-dark);
+        padding: 2rem 1rem;
+        position: relative;
+    }
+
+    .id-card-2 .overlay {
+        background: transparent; /* Adjust as needed */
+    }
+
+    .id-card-2 img.flag {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center center;
+        opacity: 0.1; /* Adjust the overall opacity as needed */
     }
 </style>
+
 <div class="container-fluid" id="id-card">
     <div class="d-flex mb-3">
         <div class="px-2">
-            <div class="id-card">
-                <div class="head-text text-center fw-bolder">{{system_name}}</div>
+            <div class="id-card-1 id-card">
+                <div class="overlay"></div>
+                <img src="{% static 'assets/default/img/flag.jpg' %}" class="flag" alt="Flag">
+                <img src="{% static 'assets/default/img/logo.jpg' %}" class="logo-left" alt="Left Logo">
+                <img src="{% static 'assets/default/img/logo.jpg' %}" class="logo-right" alt="Right Logo">
                 <div class="d-flex w-100 justify-content-center my-4">
                     <img src="{% if employee.avatar %}{{employee.avatar.url}}{% endif %}" id="card-avatar" class="img-thumbnail" alt="">
                 </div>
@@ -41,7 +111,9 @@
             </div>
         </div>
         <div class="px-2">
-            <div class="id-card">
+            <div class="id-card-2 id-card">
+                <div class="overlay"></div>
+                <img src="{% static 'assets/default/img/flag.jpg' %}" class="flag" alt="Flag">
                 <div class="lh-1">
                     <dl>
                         <dt>Employee Code</dt>
@@ -66,6 +138,7 @@
         </div>
     </div>
 </div>
+
 <noscript id="qr-style">
 <style>
     * {
@@ -76,9 +149,9 @@
     }
     .id-card {
         width: 2.11in;
-        height: 3.38in;
+        height: 1in;
         border: 2px solid var(--bs-dark);
-        padding: 2rem 1.5rem;
+        padding: 2rem 5rem;
         border-radius: 5px;
     }
     #card-avatar {
@@ -91,8 +164,9 @@
     }
 </style>
 </noscript>
+
 <script>
     $(function() {
-
+        // Add any additional JavaScript logic here
     })
 </script>

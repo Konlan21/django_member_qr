@@ -19,10 +19,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark bg-gradient fixed-top shadow border-bottom">
         <div class="container">
             <!-- Navbar brand -->
-            <a class="navbar-brand" target="_blank" href="./">
-                {% comment %} <img src="{{ MEDIA_URL }}/default/logo.png" height="16" alt="{{ MEDIA_URL }}" loading="lazy" class="bg-white bg-gradient px-1 py-1" style="margin-top: -3px;" /> {% endcomment %}
-                <b>{{system_name}}</b>
-            </a>
+            <h5 class="text-white mb-0"><b> Member QR Code Generator</b></h5>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarExample01" aria-controls="navbarExample01" aria-expanded="false" aria-label="Toggle navigation">
                 <i class="fas fa-bars"></i>
             </button>
@@ -32,10 +29,17 @@
                         <a class="nav-link" aria-current="page" href="{% url 'home-page' %}">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="{% url 'employee-page' %}">Employees</a>
+                        <a class="nav-link" aria-current="page" href="{% url 'employee-page' %}">Members</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="scanner-link" aria-current="page" href="javascript:void(0)" data_url="{% url 'view-scanner' %}">Search Employee</a>
+                        <a class="nav-link" id="scanner-link" aria-current="page" href="javascript:void(0)" data_url="{% url 'view-scanner' %}">Search Members: </a>
+                    </li>
+                    <!-- Add Search Bar -->
+                    <li class="nav-item">
+                        <form class="d-flex" id="employeeSearchForm">
+                            <input class="form-control me-2" type="search" placeholder="Search Members" aria-label="Search" id="employeeSearchInput">
+                            <!-- <button class="btn btn-outline-light" type="button" id="employeeSearchButton">Search</button> -->
+                        </form>
                     </li>
                 </ul>
 
@@ -62,17 +66,71 @@
         <a class="btn btn-primary m-2" href="https://mdbootstrap.com/docs/standard/" target="_blank" role="button">Download MDB UI KIT</a> -->
     </div>
     <!-- Jumbotron -->
-</header>
+    
 <script>
     $(function() {
-        $('#topNav .nav-link').each(function() {
-            var current = '{{ request.get_full_path | urlencode }}'
-            if (current == $(this).attr('href')) {
-                $(this).parent().addClass('active')
+        $('table').find('td, th').addClass('align-middle px-2 py-1');
+
+        $('.view_card').click(function(){
+            uni_modal("View Employee ID", $(this).attr('data-url'), 'modal-lg');
+        });
+
+        $('.view_detail').click(function(){
+            uni_modal("View Employee Details", $(this).attr('data-url'), 'modal-md');
+        });
+
+        $('#uni_modal').on('shown.bs.modal', function() {
+            if ($('#id-card').length > 0) {
+                var print_btn = $('<button id="print-card" class="btn btn-success btn-sm bg-gradient rounded-0 me-2" type="button"><i class="fa fa-print"></i> Print</button>');
+                $(this).find('.modal-sub-footer').prepend(print_btn);
+
+                print_btn.click(function() {
+                    var h = $("head").clone();
+                    var style = $($("noscript#qr-style").html()).clone();
+                    var card = $("#id-card").clone();
+                    var el = $('<div>');
+
+                    el.append(h);
+                    el.append(style);
+                    el.append(card);
+                    start_loader();
+                    var nw = window.open("", "_blank", "width=900, height=900");
+                    nw.document.write(el.html());
+                    nw.document.close();
+
+                    setTimeout(()=>{
+                        nw.print();
+                        setTimeout(()=>{
+                            nw.close();
+                            end_loader();
+                        }, 300);
+                    }, 300);
+                });
+
+                $('#uni_modal').on('hide.bs.modal', function() {
+                    print_btn.remove();
+                });
             }
-        })
-        $('#scanner-link').click(function(){
-            uni_modal("QR Scanner", $(this).attr('data_url'))
-        })
-    })
+        });
+
+        // Employee Search on keyup
+        $('#employeeSearchInput').keyup(function() {
+            var searchTerm = $(this).val().toLowerCase();
+
+            // Loop through each row in the employee table body
+            $('tbody tr').each(function() {
+                var employeeName = $(this).find('td:eq(1)').text().toLowerCase(); // Assuming name is in the second <td>
+
+                // Show or hide the row based on the search term
+                if (employeeName.includes(searchTerm)) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
+        });
+    });
 </script>
+
+
+</header>

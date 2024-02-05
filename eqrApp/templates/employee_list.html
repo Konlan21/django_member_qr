@@ -11,58 +11,58 @@
                     <div class="text-end mb-2">
                         <a href="{% url 'add-employee' %}" class="btn btn-primary btn-sm rounded-0 bg-gradient"><i class="fa fa-plus"></i> Add New Employee</a>
                     </div>
-                    <table class="table table-stripped table-bordered">
-                        <colgroup>
-                            <col width="5%">
-                            <col width="15%">
-                            <col width="20%">
-                            <col width="25%">
-                            <col width="25%">
-                            <col width="10%">
-                        </colgroup>
-                        <thead>
-                            <tr class="bg-primary bg-gradient text-light">
-                                <th class="text-center">#</th>
-                                <th class="text-center">Date Added</th>
-                                <th class="text-center">Company ID</th>
-                                <th class="text-center">Name</th>
-                                <th class="text-center">Dept./Pos.</th>
-                                <th class="text-center">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for employee in employees %}
-                            <tr>
-                                <td class="text-center">{{forloop.counter}}</td>
-                                <td class="">{{ employee.date_created|date:"M d, Y H:i" }}</td>
-                                <td class="">{{employee.employee_code}}</td>
-                                <td class="">{{employee}}</td>
-                                <td class="">
-                                    <div class="lh-1">
-                                        <div>{{employee.department}}</div>
-                                        <div>{{employee.position}}</div>
-                                    </div>
-                                </td>
-                                <td class="text-center">
-                                    <div class="dropdown">
-                                        <button class="btn btn-light border bg-gradient btn-sm rounded-0 dropdown-toggle" type="button" id="employeeDD{{employee.pk}}" data-bs-toggle="dropdown" aria-expanded="false">
-                                          Action
-                                        </button>
-                                        <ul class="dropdown-menu" aria-labelledby="employeeDD{{employee.pk}}">
-                                            <li><a class="dropdown-item view_detail" href="javascript:void(0)" data-url="{% url 'view-details' employee.employee_code %}" >View Data</a></li>
-                                            <li><a class="dropdown-item view_card" href="javascript:void(0)" data-url="{% url 'view-card' employee.pk %}" >View ID</a></li>
-                                        </ul>
-                                    </div>
-                                </td>
-                            </tr>
-                            {% endfor %} 
-                            {% if not employees %}
-                            <tr>
-                                <th colspan="6" class="text-center">No records.</th>
-                            </tr>
-                            {% endif %}
-                        </tbody>
-                    </table>
+<table class="table table-stripped table-bordered">
+    <colgroup>
+        <col width="5%">
+        <col width="15%">
+        <col width="20%">
+        <col width="25%">
+        <col width="25%">
+        <col width="10%">
+    </colgroup>
+    <thead>
+        <tr class="bg-primary bg-gradient text-light">
+            <th class="text-center">#</th>
+            <th class="text-center">Name</th>
+            <th class="text-center">Member Code</th>
+            <th class="text-center">Gender</th>
+            <th class="text-center">Profession</th>
+            <th class="text-center">Birth Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for employee in employees %}
+        <tr>
+            <td class="text-center">{{forloop.counter}}</td>
+            <td class="">{{employee.name}}</td>
+            <td class="">{{employee.employee_code}}</td>
+            <td class="">{{employee.gender}}</td>
+            <td class="">{{employee.profession}}</td>
+            <td class="">
+                <div class="lh-1">
+                    <div>{{employee.date_of_birth}}</div>
+                </div>
+            </td>
+            <td class="text-center">
+                <div class="dropdown">
+                    <button class="btn btn-light border bg-gradient btn-sm rounded-0 dropdown-toggle" type="button" id="employeeDD{{employee.pk}}" data-bs-toggle="dropdown" aria-expanded="false">
+                      Action
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="employeeDD{{employee.pk}}">
+                        <li><a class="dropdown-item view_detail" href="javascript:void(0)" data-url="{% url 'view-details' employee.employee_code %}" >View Data</a></li>
+                        <li><a class="dropdown-item view_card" href="javascript:void(0)" data-url="{% url 'view-card' employee.pk %}" >View ID</a></li>
+                    </ul>
+                </div>
+            </td>
+        </tr>
+        {% endfor %} 
+        {% if not employees %}
+        <tr>
+            <th colspan="6" class="text-center">No records.</th>
+        </tr>
+        {% endif %}
+    </tbody>
+</table>
                 </div>
             </div>
         </div>

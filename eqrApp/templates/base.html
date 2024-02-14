@@ -1,5 +1,6 @@
 {% load static %}
 {% load customfilter %}
+{% block PageContent %}{% endblock PageContent%} 
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,7 +8,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> {% if page_title %}
-    <title>{{ page_title }} | {{system_name}} </title>
+    <title> Member ID with QR Code </title>
     {% else %}
     <title>{{system_name}}</title>
     {% endif %}
@@ -32,9 +33,14 @@
             border-bottom-right-radius: calc(0.3rem - 1px);
             border-bottom-left-radius: calc(0.3rem - 1px);
         }
+
+        @media print {
+            
+        }
     </style>
     {% block headerContent %} {% endblock headerContent %}
 </head>
+
 
 <body class="">
     {% if topbar %}
@@ -108,6 +114,9 @@
                     <button type="button" class="btn btn-sm btn-flat btn-primary rounded-0" id='confirm' onclick="">Continue</button>
                     <button type="button" class="btn btn-sm btn-flat btn-light border rounded-0" data-bs-dismiss="modal">Close</button>
                 </div>
+                        <button id="print-card" class="btn btn-success btn-sm bg-gradient rounded-0 me-2" type="button">
+                    <i class="fa fa-print"></i> Print
+                </button>
             </div>
         </div>
     </div>
@@ -143,10 +152,10 @@
         </div> -->
 
         <!-- Copyright -->
-        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+        <!-- <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
             © {% now 'Y' %} Copyright:
             <a class="text-dark" href="https://sourcecodester.com/tips23" target="_blank">oretnom23</a>
-        </div>
+        </div> -->
         <!-- Copyright -->
     </footer>
         {% endif %}
@@ -204,7 +213,7 @@
         $(function() {
             $('#uni_modal').on('shown.bs.modal', function() {
                 if ($('#e-details').length > 0) {
-                    var delete_btn = $('<button id="delete-btn" class="btn btn-danger btn-sm bg-gradient rounded-0 me-2"><i class="fa fa-trash"></i> Delete</button>')
+                    // var delete_btn = $('<button id="delete-btn" class="btn btn-danger btn-sm bg-gradient rounded-0 me-2"><i class="fa fa-trash"></i> Delete</button>')
                     var edit_btn = $('<a id="edit-btn" href="' + emp_edit_url + '" class="btn btn-primary btn-sm bg-gradient rounded-0 me-2"><i class="fa fa-edit"></i> Edit</a>')
                     $(this).find('.modal-sub-footer').prepend(delete_btn)
                     $(this).find('.modal-sub-footer').prepend(edit_btn)
@@ -244,3 +253,4 @@
 </body>
 
 </html>
+

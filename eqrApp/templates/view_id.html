@@ -171,10 +171,33 @@
         margin-right: .15in;
     }
 
-    @media print {
+ @media print {
+        body {
+            overflow: hidden; /* Hide the scrollbar during printing */
+        }
+
+        /* Add a class to the body if you want to hide it specifically on print */
+        body.no-print {
+            margin: 0;
+            padding: 0;
+        }
+
         #uni_modal .modal-footer,
         #uni_modal .modal-sub-footer {
             display: none;
+        }
+
+        .box,
+        #id-card .overlay {
+            display: none; /* Hide the unwanted content */
+        }
+
+        @page {
+            margin: 0;
+        }
+        
+        #id-card {
+            page-break-before: always; /* Ensure a new page for each ID card */
         }
     }
 </style>

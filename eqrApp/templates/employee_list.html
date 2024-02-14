@@ -78,6 +78,18 @@
         $('.view_detail').click(function(){
             uni_modal("View Employee Details", $(this).attr('data-url'),'modal-md')
         })
+
+        var printStyles = `
+            @media print {
+                body {
+                    overflow: hidden;
+                }
+                .unwanted-content {
+                    display: none;
+                }
+            }
+        `;
+        $('head').append('<style>' + printStyles + '</style>');
         // $('#uni_modal').on('shown.bs.modal', function() {
         //     if ($('#id-card').length > 0) {
         //         // var print_btn = $('<button id="print-card" class="btn btn-success btn-sm bg-gradient rounded-0 me-2" type="button"><i class="fa fa-print"></i> Print</button>')

@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> {% if page_title %}
     <title> Member ID with QR Code </title>
     {% else %}
-    <title>{{system_name}}</title>
+    <!-- <title>{{system_name}}</title> -->
     {% endif %}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="{% static 'assets/bootstrap/css/bootstrap.min.css' %}">
@@ -35,7 +35,9 @@
         }
 
         @media print {
-            
+            title {
+                display: none;
+            }
         }
     </style>
     {% block headerContent %} {% endblock headerContent %}
@@ -96,6 +98,9 @@
                     <button type="button" class="btn btn-sm btn-flat btn-light border rounded-0" data-bs-dismiss="modal">Cancel</button>
                 </div>
                 <div class="modal-sub-footer">
+                <button id="print-card" class="btn btn-success btn-sm bg-gradient rounded-0 me-2" type="button">
+                    <i class="fa fa-print"></i> Print
+                </button>
                     <button type="button" class="btn btn-sm btn-flat btn-light border rounded-0" data-bs-dismiss="modal">Close</button>
                 </div>
             </div>
@@ -249,6 +254,42 @@
                 }
             })
         }
+
+        // print logic
+
+function printModalContent() {
+    // Clone the modal content
+    var printContent = $('#uni_modal .modal-content').clone();
+
+    // Remove unnecessary elements (buttons, forms, etc.) from the cloned content
+    printContent.find('.modal-footer').remove();
+    printContent.find('.modal-sub-footer').remove();
+
+    // Create a new iframe
+    var printIframe = $('<iframe id="printFrame" style="display:none;"></iframe>');
+    $('body').append(printIframe);
+
+    // Append cloned content to the iframe's body
+    printIframe.contents().find('body').html(printContent.html());
+
+    // Append stylesheets to the iframe's head
+    $('link[rel="stylesheet"]').each(function () {
+        printIframe.contents().find('head').append('<link rel="stylesheet" href="' + $(this).attr("href") + '">');
+    });
+
+    // Wait for stylesheets to load before triggering the print function
+    setTimeout(function () {
+        printIframe[0].contentWindow.print(); // Directly trigger print in the iframe
+        // Remove the iframe after printing
+        printIframe.remove();
+    }, 100); // Adjust the delay as needed
+}
+
+// Add an event listener for the print button
+$('#print-card').on('click', function () {
+    printModalContent();
+});
+
     </script>
 </body>
 

@@ -68,7 +68,7 @@ def logout_user(request):
 def employee_list(request):
     context =context_data()
     context['page'] = 'employee_list'
-    context['page_title'] = 'Employee List'
+    context['page_title'] = 'modal-header'
     context['employees'] = models.Employee.objects.all()
 
     return render(request, 'employee_list.html', context)

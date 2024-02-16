@@ -20,7 +20,7 @@ class SaveEmployee(forms.ModelForm):
     boma = forms.CharField(max_length=255, label="Boma")
 
     class Meta:
-        model = models.Employee
+        model = models.Member
         fields = ('employee_code',
                   'name',
                   'gender',

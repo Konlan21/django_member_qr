@@ -78,12 +78,16 @@
 
     .id-card {
         width: 5.15in;
-        height: 41vh;
+        height: 95%;
         border: 2px solid var(--bs-dark);
         padding: 2rem 0;
         position: relative;
         border-radius: 4px;
 
+    }
+
+    .id-card-2 {
+        overflow: hidden;
     }
 
     .id-card-2 .overlay {
@@ -92,13 +96,13 @@
 
     .id-card-2 img.flag {
         position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
+        top: 1px;
+        left: -76px;
+        width: 116%;
+        height: 70%;
         object-fit: cover;
         object-position: center center;
-        opacity: 0.1; /* Adjust the overall opacity as needed */
+        opacity: 0.1;
     }
 
     .member-avatar-info {
@@ -158,8 +162,8 @@
     .box {
         background: #000;
         width: 100%;
-        height: 5rem;
-
+        height: 4.3rem;
+        margin-top: -1.9rem;
     }
 
     .dl {
@@ -169,6 +173,32 @@
 
     dt {
         margin-right: .15in;
+    }
+
+    .card-2-info {
+        margin-top: -1rem;
+    }
+
+    .card-2-item {
+        font-size: 1.1rem;
+        font-weight: 650;
+
+    }
+
+    /* .item-1 {
+
+    } */
+    /* .item-2 {
+
+    } */
+    .item-3 {
+        margin: 0.5rem 0 0 0;
+    }
+    .item-4 {
+        margin: 0.3rem 0 0.4rem 0;
+    }
+    .item-5 {
+        margin-top: .5rem;
     }
 
  @media print {
@@ -187,17 +217,22 @@
             display: none;
         }
 
-        .box,
         #id-card .overlay {
             display: none; /* Hide the unwanted content */
         }
 
         @page {
-            margin: 0;
+            margin-bottom: 0;
         }
         
         #id-card {
             page-break-before: always; /* Ensure a new page for each ID card */
+        }
+        .box {
+            height: .7in;
+        }
+        .id-card {
+            height: 3in;
         }
     }
 </style>
@@ -262,22 +297,26 @@
                 <div class="overlay"></div>
                 <img src="{% static 'assets/default/img/flag.jpg' %}" class="flag" alt="Flag">
                 <div class="lh-1">
-                    <dl class="dl"> 
-                        <div class="d-flex fw-bold">
+                    <dl class="dl card-2-info"> 
+                        <div class="d-flex card-2-item item-1">
                             <dt class="mb-3">State: </dt>
                             <dd>{{employee.state}}</dd>
                         </div>
-                        <div class="d-flex fw-bold">
+                        <div class="d-flex item-2 card-2-item">
                             <dt class="mb-3">County: </dt>
                             <dd>{{employee.county}}</dd>
                         </div>
-                        <div class="d-flex fw-bold">
+                        <div class="d-flex item-3 card-2-item ">
                             <dt class="mb-3">Payam: </dt>
                             <dd>{{employee.payam}}</dd>
                         </div>
-                        <div class="d-flex fw-bold">
+                        <div class="d-flex item-4 card-2-item ">
                             <dt class="mb-3">Boma: </dt>
                             <dd>{{employee.boma}}</dd>
+                        </div>
+                        <div class="d-flex item-5 card-2-item ">
+                            <dt class="mb-3 ">Serial No:</dt>
+                            <dd>{{employee.employee_code}}</dd>
                         </div>
                     </dl>
 

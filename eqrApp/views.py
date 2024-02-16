@@ -13,8 +13,8 @@ from django.contrib.auth.decorators import login_required
 def context_data():
     context = {
         'page_name' : '',
-        'page_title' : 'Chat Room',
-        'system_name' : 'Employee ID with QR Code Generator',
+        'page_title' : 'Members',
+        'system_name' : 'Member ID with QR Code Generator',
         'topbar' : True,
         'footer' : True,
     }
@@ -56,7 +56,7 @@ def home(request):
     context = context_data()
     context['page'] = 'home'
     context['page_title'] = 'Home'
-    context['employees'] = models.Employee.objects.count()
+    context['employees'] = models.Member.objects.count()
     return render(request, 'home.html', context)
 
 def logout_user(request):
@@ -69,7 +69,7 @@ def employee_list(request):
     context =context_data()
     context['page'] = 'employee_list'
     context['page_title'] = 'modal-header'
-    context['employees'] = models.Employee.objects.all()
+    context['employees'] = models.Member.objects.all()
 
     return render(request, 'employee_list.html', context)
 
@@ -83,7 +83,7 @@ def manage_employee(request, pk=None):
     else:
         context['page'] = 'edit_employee'
         context['page_title'] = 'Update Employee'
-        context['employee'] = models.Employee.objects.get(id=pk)
+        context['employee'] = models.Member.objects.get(id=pk)
 
     return render(request, 'manage_employee.html', context)
 
@@ -97,7 +97,7 @@ def save_employee(request):
         if request.POST['id'] == '':
             form = forms.SaveEmployee(request.POST, request.FILES)
         else:
-            employee = models.Employee.objects.get(id = request.POST['id'])
+            employee = models.Member.objects.get(id = request.POST['id'])
             form = forms.SaveEmployee(request.POST, request.FILES, instance = employee)
         if form.is_valid():
             form.save()
@@ -118,10 +118,10 @@ def save_employee(request):
 @login_required
 def view_card(request, pk =None):
     if pk is None:
-        return HttpResponse("Employee ID is Invalid")
+        return HttpResponse("Member ID is Invalid")
     else:
         context = context_data()
-        context['employee'] = models.Employee.objects.get(id=pk)
+        context['employee'] = models.Member.objects.get(id=pk)
         return render(request, 'view_id.html', context)
 
 @login_required
@@ -136,7 +136,7 @@ def view_details(request, code = None):
         return HttpResponse("Employee code is Invalid")
     else:
         context = context_data()
-        context['employee'] = models.Employee.objects.get(employee_code=code)
+        context['employee'] = models.Member.objects.get(employee_code=code)
         return render(request, 'view_details.html', context)
 
 @login_required
@@ -146,7 +146,7 @@ def delete_employee(request, pk=None):
         resp['msg'] = "No data has been sent into the request."
     else:
         try:
-            models.Employee.objects.get(id=pk).delete()
+            models.Member.objects.get(id=pk).delete()
             resp['status'] = 'success'
             messages.success(request, 'Employee has been deleted successfully.')
         except:

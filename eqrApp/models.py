@@ -8,7 +8,7 @@ import qrcode
 from PIL import Image
 
 
-class Employee(models.Model):
+class Member(models.Model):
     employee_code = models.CharField(max_length=100, unique=True)
     name = models.CharField(max_length=250)
     gender = models.CharField(max_length=50, choices=(("Male", "Male"), ("Female", "Female")), default="Male")
@@ -31,7 +31,7 @@ class Employee(models.Model):
 
 
     def save(self, *args, **kwargs):
-        super(Employee, self).save(*args, **kwargs)
+        super(Member, self).save(*args, **kwargs)
         print(self.avatar)
         imag = Image.open(self.avatar.path)
         if imag.width > 200 or imag.height> 200:
